@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.*;
+import java.lang.*;
 
 public class Procedure_of_Returningcommand {
     //save info
@@ -35,12 +37,30 @@ public class Procedure_of_Returningcommand {
             ResultSet rs2 = statement.executeQuery(sql2);
             int cloth_id = rs2.getInt("id");
 
+            
+            String sql4 = String.format("select a.lending_time from Clothing c, active_lending a where a.clothing_id = %d", cloth_id);
+            ResultSet rs4 = statement.executeQuery(sql4);
+            String lend_time = rs4.getString("lending_time");
+
+            String sql5 = String.format("select c.time from Clothing c where c.id = %d", cloth_id);
+            ResultSet rs5 = statement.executeQuery(sql5);
+            String rental_period = rs5.getString("time");
+
+           
+            System.out.println("\n>>Your lending time is " + lend_time + ".<<");
+            System.out.println("If the period is over " + rental_period + ", a late fee is required.\nNeed to pay 500yen.");
+            System.out.print("Confirm message above. Something input. : ");
+            Scanner scan = new Scanner(System.in);
+            String command = scan.next();
+
             String sql3 = String.format("select distinct(c.name) from Clothing c, active_lending a, User u where a.user_id = %d and a.clothing_id = c.id", user_id);
             ResultSet rs3 = statement.executeQuery(sql3);
+
             while (rs3.next()) {
                 String compare = rs3.getString("name");
                 if (cloth_name.equals(compare)) {
-                    System.out.println(">>Success return!<<");
+                    
+                    System.out.println("\n>>Success return!<<\n");
                     exists = true;
                 }
             }
