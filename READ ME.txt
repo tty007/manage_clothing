@@ -1,0 +1,8 @@
+実行する際は必ずクラスパスを指定してプログラムを起動する
+
+java -classpath ".;sqlite-jdbc-3.23.1.jar" [ファイル名]
+
+特定のユーザを取り出すとき
+    select name from User where name = "testuser";
+名前の入力からパスワードを取り出すとき
+    select password from User where name = "testuser";
