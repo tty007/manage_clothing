@@ -1,6 +1,8 @@
 import java.io.*;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Calendar;
 
 public class System_mode {
     //save login info
@@ -48,7 +50,7 @@ public class System_mode {
                 System.out.println("----->>This is your borrowing List!<<-----");
                 Show_List_of_borrowed_Cloths();
                 System.out.println("----------->>End of This List<<-----------");
-                System.out.println("\nreturn select mode | [r]\nexit                | [e]");
+                System.out.println("\nreturn select mode  | [r]\nexit                | [e]");
                 System.out.print(": ");
                 String show_List_of_borrowed_Cloths = scan.next();
                 if (show_List_of_borrowed_Cloths.equals("r")) {
@@ -129,7 +131,16 @@ public class System_mode {
         System.out.print("input Cloth name you wanna borrow. : ");
         Scanner scan = new Scanner(System.in);
         String cloth_name = scan.next();
-        procedure_of_lendingcommand p = new procedure_of_lendingcommand(user_name, cloth_name);
+        // System.out.print("input today's date [yyyy/mm/dd] :");
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String date = sdf.format(cal.getTime());
+        // if (!(date.matches("^[0-9]{4}/[0-9]{2}/[0-9]{2}$"))) {
+        //     System.out.println("please input correct date");
+        //     Procedure_of_lending();
+        // }
+
+        procedure_of_lendingcommand p = new procedure_of_lendingcommand(user_name, cloth_name, date);
         p.sqlcommand();
     }
 

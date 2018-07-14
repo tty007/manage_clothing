@@ -4,14 +4,16 @@ public class procedure_of_lendingcommand {
     //save info
     String user_name;
     String cloth_name;
+    String date;
     boolean exists = false;
     String borrow_cloth_name;
     int uid;
     int cid;
 
-    public procedure_of_lendingcommand(String user_name, String cloth_name) {
+    public procedure_of_lendingcommand(String user_name, String cloth_name, String date) {
         this.user_name = user_name;
         this.cloth_name = cloth_name;
+        this.date = date;
     }
     
     public void sqlcommand () {
@@ -44,9 +46,10 @@ public class procedure_of_lendingcommand {
                     ResultSet rs2 = statement.executeQuery(get_cid_sql);
                     cid = rs2.getInt("id");
 
-                    String insertsql = String.format("insert into active_lending (user_id, clothing_id) values (%d, %d)", uid, cid);
+                    String insertsql = String.format("insert into active_lending (user_id, clothing_id, lending_time) values (%d, %d, %s)", uid, cid, date);
                     statement.executeUpdate(insertsql);
-                    System.out.println(">>You borrowed that!<<");
+                    System.out.println("\n" + date);
+                    System.out.println(">>You borrowed that!<<\n");
                     System_mode s = new System_mode(user_name);
                     s.show_mode();
                 }
